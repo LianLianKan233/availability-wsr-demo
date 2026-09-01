@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESS Admin API Availability</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Segoe UI", Arial, sans-serif;
+      --blue: #25589d;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e0ea;
+      --surface: #ffffff;
+      --canvas: #f4f7fb;
+      --green: #5f9700;
+      --yellow: #f4dc57;
+      --orange: #e88a42;
+      --red: #c83b31;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); }
+    a { color: inherit; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 28px;
+      background: var(--blue);
+      color: white;
+    }
+    .topbar h1 { margin: 0; font-size: clamp(26px, 3vw, 44px); }
+    .topbar a { font-size: 15px; font-weight: 600; white-space: nowrap; }
+
+    main { max-width: 1800px; margin: auto; padding: 20px 24px 30px; }
+    .notice {
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      border: 1px solid #bcd3ec;
+      border-radius: 8px;
+      background: #eaf4ff;
+      color: #294b72;
+      font-size: 13px;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .summary-card, .panel, .sidebar section {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: 0 2px 7px rgb(25 47 78 / 6%);
+    }
+    .summary-card { padding: 14px 16px; }
+    .summary-card .label { color: var(--muted); font-size: 12px; font-weight: 600; }
+    .summary-card .value { margin-top: 4px; font-size: 24px; font-weight: 700; }
+    .summary-card .detail { color: var(--muted); font-size: 12px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(760px, 2fr) minmax(360px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .heatmaps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .panel { padding: 16px; overflow: hidden; }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .panel h2, .sidebar h2 { margin: 0; font-size: 21px; }
+    .ring-state {
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #fce8e6;
+      color: #9c251d;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .ring-state.healthy { background: #e8f3d8; color: #346000; }
+    .table-wrap { overflow-x: auto; }
+    .heatmap { width: 100%; min-width: 570px; border-collapse: separate; border-spacing: 2px; }
+    .heatmap th {
+      padding: 5px 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .heatmap th:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      min-width: 160px;
+      background: white;
+      text-align: right;
+    }
+    .heatmap td {
+      min-width: 48px;
+      height: 29px;
+      padding: 4px;
+      border-radius: 2px;
+      color: #121820;
+      font-size: 10px;
+      font-weight: 750;
+      text-align: center;
+      text-shadow: 0 1px white;
+    }
+    .heatmap td.api {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      min-width: 160px;
+      padding-right: 8px;
+      background: white;
+      color: var(--muted);
+      font-weight: 500;
+      text-align: right;
+      text-shadow: none;
+    }
+    .heatmap td.na { background: #f0f2f5; color: #98a2b3; text-shadow: none; }
+    .good { background: var(--green); }
+    .watch { background: var(--yellow); }
+    .poor { background: var(--orange); }
+    .critical { background: var(--red); color: white !important; text-shadow: 0 1px #6b1711 !important; }
+    .availability-cell {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      font-weight: inherit;
+      text-shadow: inherit;
+    }
+    .availability-cell:hover, .availability-cell:focus-visible {
+      outline: 2px solid #172033;
+      outline-offset: -2px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .legend span::before {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 5px;
+      border-radius: 2px;
+      content: "";
+    }
+    .legend .l-good::before { background: var(--green); }
+    .legend .l-watch::before { background: var(--yellow); }
+    .legend .l-poor::before { background: var(--orange); }
+    .legend .l-critical::before { background: var(--red); }
+
+    .sidebar { display: grid; gap: 16px; }
+    .sidebar section { padding: 18px; }
+    .sidebar h2 { margin-bottom: 12px; }
+    .insight {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 10px;
+      padding: 14px 0;
+      border-top: 1px solid #e8ecf2;
+    }
+    .insight:first-of-type { border-top: 0; padding-top: 2px; }
+    .number {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 50%;
+      background: #3972ba;
+      color: white;
+      font-weight: 700;
+    }
+    .insight h3 { margin: 1px 0 5px; font-size: 15px; }
+    .insight p { margin: 0; color: #475467; font-size: 13px; line-height: 1.45; }
+    .tag {
+      display: inline-block;
+      margin-top: 7px;
+      padding: 3px 7px;
+      border-radius: 4px;
+      background: #fff2cc;
+      color: #714d00;
+      font-size: 11px;
+      font-weight: 650;
+    }
+    .create-bug {
+      margin-left: 8px;
+      padding: 4px 9px;
+      border: 1px solid #25589d;
+      border-radius: 5px;
+      background: white;
+      color: #25589d;
+      cursor: pointer;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 650;
+    }
+    .create-bug:hover { background: #edf5ff; }
+    .cause-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .cause-table th, .cause-table td {
+      padding: 9px 7px;
+      border-bottom: 1px solid #e4e8ef;
+      text-align: left;
+      vertical-align: top;
+    }
+    .cause-table th { color: var(--muted); font-size: 11px; }
+    .cause-table td:nth-child(2) { text-align: right; white-space: nowrap; }
+    .empty {
+      min-height: 92px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed #cbd4df;
+      border-radius: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    dialog {
+      width: min(680px, calc(100vw - 28px));
+      max-height: calc(100vh - 40px);
+      padding: 0;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 22px 70px rgb(13 31 54 / 35%);
+    }
+    dialog::backdrop { background: rgb(13 31 54 / 55%); }
+    .dialog-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .dialog-head h2 { margin: 0; font-size: 21px; }
+    .dialog-close {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 25px;
+    }
+    .bug-form {
+      display: grid;
+      gap: 14px;
+      padding: 20px 22px 22px;
+    }
+    .bug-context {
+      padding: 11px 13px;
+      border-radius: 7px;
+      background: #f2f6fb;
+      color: #344054;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .bug-form label { display: grid; gap: 6px; font-size: 13px; font-weight: 650; }
+    .bug-form input[type="text"], .bug-form textarea, .bug-form select {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid #b9c3d0;
+      border-radius: 6px;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 400;
+    }
+    .bug-form textarea { min-height: 128px; resize: vertical; }
+    .bug-defaults { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .check-row {
+      display: flex !important;
+      grid-template-columns: none !important;
+      align-items: flex-start;
+      gap: 8px !important;
+      font-weight: 500 !important;
+    }
+    .check-row input { margin-top: 3px; }
+    .dialog-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .dialog-actions button {
+      padding: 8px 14px;
+      border: 1px solid #aeb8c5;
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 650;
+    }
+    .dialog-actions .primary { border-color: #25589d; background: #25589d; color: white; }
+    .dialog-actions button:disabled { cursor: wait; opacity: 0.65; }
+    .bug-status { min-height: 20px; color: #9c251d; font-size: 13px; }
+    .bug-status.success { color: #346000; }
+
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 820px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      main { padding: 14px; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .heatmaps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <h1>ESS – Admin API Availability</h1>
+    <a href="https://portal.microsoftgeneva.com/dashboard/M365_ESS/Availability/WSR%2520Availability/ESSAdminApiAvailability">
+      Open source dashboard ↗
+    </a>
+  </header>
+
+  <main>
+    <div class="notice" id="data-notice">
+      Demo based on the supplied WSR slide. Values are illustrative snapshots, not a live Geneva feed.
+    </div>
+
+    <section class="summary" id="summary" aria-label="Ring status summary"></section>
+
+    <div class="layout">
+      <section class="heatmaps" id="heatmaps" aria-label="Availability heatmaps"></section>
+
+      <aside class="sidebar">
+        <section>
+          <h2>Key lowlights</h2>
+          <div id="lowlights"></div>
+        </section>
+
+        <section>
+          <h2>Top failure status codes</h2>
+          <table class="cause-table">
+            <thead><tr><th>Ring / status</th><th>Count</th><th>Affected APIs</th></tr></thead>
+            <tbody id="cause-table-body"></tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Investments</h2>
+          <div class="empty">No active investment was supplied for this review period.</div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <dialog id="bug-dialog">
+    <div class="dialog-head">
+      <h2>Create Azure DevOps bug</h2>
+      <button class="dialog-close" id="bug-dialog-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <form class="bug-form" id="bug-form">
+      <div class="bug-context" id="bug-context"></div>
+      <label>
+        Title
+        <input id="bug-title" name="title" type="text" maxlength="255" required>
+      </label>
+      <label>
+        Investigation details or suspected cause
+        <textarea id="bug-notes" name="notes" maxlength="10000" required></textarea>
+      </label>
+      <label>
+        Severity
+        <select id="bug-severity" name="severity">
+          <option>1 - Critical</option>
+          <option>2 - High</option>
+          <option selected>3 - Medium</option>
+          <option>4 - Low</option>
+        </select>
+      </label>
+      <div class="bug-defaults">
+        Project: O365 Core · Area: O365 Core\ESS · Priority: 2 ·
+        Tags: Programming Model; WSR · PS Database: OfficeMain
+      </div>
+      <label class="check-row">
+        <input id="bug-assign" type="checkbox" checked>
+        Assign the bug to the Azure CLI signed-in user.
+      </label>
+      <label class="check-row">
+        <input id="bug-confirm" type="checkbox" required>
+        I reviewed the title and description and confirm creation of a real Azure DevOps bug.
+      </label>
+      <div class="bug-status" id="bug-status" role="status"></div>
+      <div class="dialog-actions">
+        <button id="bug-cancel" type="button">Cancel</button>
+        <button class="primary" id="bug-submit" type="submit">Create real bug</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    // DATA_START
+    const reportMetadata = {
+      source: "Illustrative WSR slide data",
+      generatedAt: "Not generated from Geneva",
+      rule: "HTTP 408, 423, 429, and 5xx are treated as unavailable"
+    };
+    const dates = ["12 Aug", "14 Aug", "16 Aug", "18 Aug", "20 Aug", "22 Aug", "24 Aug", "25 Aug"];
+    const rings = [
+      {
+        name: "SDFV2",
+        details: {},
+        rows: {
+          AttachStamp: [93.89, 100, 100, 100, 100, 100, 100, 100],
+          DeleteStamp: [96.49, 97.27, 99.64, 99.91, 99.50, 99.78, 99.80, 99.62],
+          GetExtensionByName: [99.91, 99.77, 99.86, 99.89, 99.81, 99.83, 99.84, 99.82],
+          GetItemLocation: [99.99, 100, 99.49, 100, 99.93, 99.95, 100, 100],
+          GetRandomReplicaRow: [12.50, 50.83, 99.82, 99.97, 99.94, 99.91, 99.61, 99.89],
+          GetRowByRowControllerId: [99.10, 99.00, 99.70, 99.66, 96.48, 100, 100, 99.50],
+          GetStampStatistics: [68.61, 77.29, 99.83, 99.70, 99.83, 99.78, 99.89, 99.87],
+          GetStampV2: [97.16, 97.82, 97.18, 97.13, 97.17, 97.35, 96.76, 97.85],
+          ProvisionStamp: [99.29, 98.95, 98.94, 83.80, 98.86, 99.18, 98.44, 95.22],
+          RecoverStamp: [null, 100, null, 100, 96.30, 95.69, null, 98.99],
+          ResizeStamp: [98.87, 99.01, 98.60, 94.40, 96.36, 96.68, 97.02, 92.34],
+          SplitFolderStamp: [100, 83.33, 98.81, 100, 100, 98.26, 100, 100]
+        }
+      },
+      {
+        name: "MSIT",
+        rows: {
+          AttachStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          DeleteStamp: [99.95, 99.98, 99.96, 100, 99.95, 99.98, 99.99, 99.91],
+          GetExtensionByName: [99.99, 100, 99.99, 100, 99.99, 100, 100, 100],
+          GetItemLocation: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetRandomReplicaRow: [99.99, 100, 100, 100, 100, 100, 99.99, 100],
+          GetStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetStampStatistics: [99.99, 99.99, 100, 100, 99.92, 100, 100, 100],
+          GetStampV2: [99.95, 99.94, 99.89, 99.93, 99.95, 99.93, 99.94, 99.90],
+          PatchStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          ProvisionStamp: [99.99, 100, 100, 99.99, 99.98, 100, 99.98, 100],
+          ResizeStamp: [100, 100, 99.99, 100, 99.99, 99.99, 100, 100]
+        }
+      },
+      {
+        name: "SIP",
+        rows: {
+          DeleteStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetExtensionByName: [99.99, 99.99, 99.98, 99.99, 99.99, 99.94, 99.99, 99.99],
+          GetStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetStampV2: [99.75, 99.92, 99.93, 99.96, 99.95, 99.96, 99.95, 99.96],
+          PatchStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          ProvisionStamp: [99.85, 99.91, 97.11, 99.92, 99.81, 99.91, 99.93, 99.95],
+          RecoverStamp: [null, null, null, null, null, 100, null, 100]
+        }
+      },
+      {
+        name: "WW",
+        rows: {
+          AttachStamp: [100, 99.55, 100, 100, 100, 100, 100, 100],
+          DeleteStamp: [99.97, 99.97, 99.98, 99.99, 99.95, 99.98, 99.95, 99.97],
+          GetExtensionByName: [99.99, 100, 100, 100, 99.99, 99.73, 100, 100],
+          GetItemLocation: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetPrimaryRow: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetRandomReplicaRow: [100, 99.97, 100, 100, 100, 100, 100, 100],
+          GetStamp: [100, 100, 100, 100, 100, 100, 100, 100],
+          GetStampStatistics: [99.98, 99.98, 99.99, 99.99, 99.98, 99.97, 100, 100],
+          GetStampV2: [99.99, 100, 100, 100, 100, 100, 100, 100],
+          PatchStamp: [100, 100, 100, 100, 100, 100, 100, 99.98],
+          ProvisionStamp: [99.73, 99.87, 98.78, 99.92, 99.80, 99.90, 99.92, 99.49],
+          RecoverStamp: [100, null, null, null, 83.33, 89.47, null, 97.63],
+          ResizeStamp: [99.98, 99.99, 99.99, 100, 99.99, 100, 99.99, 99.99],
+          UpgradeStamp: [100, 100, 100, 100, 100, 100, 100, 100]
+        }
+      }
+    ];
+    const lowlights = [
+      {
+        title: "SDFV2 · DeleteStamp",
+        text: "Illustrative lowlight from the supplied slide.",
+        tag: "Sample"
+      }
+    ];
+    const topCauses = [
+      {
+        label: "SDFV2 / HTTP 500",
+        count: 319000,
+        apis: ["DeleteStamp"]
+      }
+    ];
+    // DATA_END
+
+    function cellClass(value) {
+      if (value === null) return "na";
+      if (value >= 99.99) return "good";
+      if (value >= 99) return "watch";
+      if (value >= 98) return "poor";
+      return "critical";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatCount(value) {
+      return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value);
+    }
+
+    function ringStats(ring) {
+      const values = Object.values(ring.rows).flat().filter(value => value !== null);
+      const degraded = values.filter(value => value < 99.9).length;
+      return {
+        average: values.reduce((sum, value) => sum + value, 0) / values.length,
+        minimum: Math.min(...values),
+        degraded
+      };
+    }
+
+    function renderSummary() {
+      const container = document.getElementById("summary");
+      rings.forEach(ring => {
+        const stats = ringStats(ring);
+        const card = document.createElement("article");
+        card.className = "summary-card";
+        card.innerHTML = `
+          <div class="label">${ring.name} · unweighted cell mean</div>
+          <div class="value">${stats.average.toFixed(3)}%</div>
+          <div class="detail">${stats.degraded} cells below 99.9% · min ${stats.minimum.toFixed(2)}%</div>`;
+        container.appendChild(card);
+      });
+    }
+
+    function renderHeatmaps() {
+      const container = document.getElementById("heatmaps");
+      rings.forEach(ring => {
+        const stats = ringStats(ring);
+        const rows = Object.entries(ring.rows).map(([api, values]) => `
+          <tr>
+            <td class="api">${api}</td>
+            ${values.map((value, index) => value === null
+              ? '<td class="na" title="No traffic">—</td>'
+              : value < 99.99
+                ? `<td class="${cellClass(value)}"><button class="availability-cell" type="button"
+                    data-api="${escapeHtml(api)}" data-index="${index}"
+                    title="${ring.name} ${escapeHtml(api)}: ${value.toFixed(2)}%. Create bug">${value.toFixed(2)}</button></td>`
+                : `<td class="${cellClass(value)}" title="${ring.name} ${escapeHtml(api)}: ${value.toFixed(2)}%">${value.toFixed(2)}</td>`
+            ).join("")}
+          </tr>`).join("");
+
+        const panel = document.createElement("article");
+        panel.className = "panel";
+        panel.innerHTML = `
+          <div class="panel-head">
+            <h2>${ring.name}</h2>
+            <span class="ring-state ${stats.degraded === 0 ? "healthy" : ""}">
+              ${stats.degraded === 0 ? "HEALTHY" : `${stats.degraded} DEGRADED`}
+            </span>
+          </div>
+          <div class="table-wrap">
+            <table class="heatmap">
+              <thead><tr><th>API</th>${dates.map(date => `<th>${date}</th>`).join("")}</tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+          <div class="legend">
+            <span class="l-good">≥99.99</span>
+            <span class="l-watch">99.00–99.98</span>
+            <span class="l-poor">98.00–98.99</span>
+            <span class="l-critical">&lt;98.00</span>
+          </div>`;
+        container.appendChild(panel);
+        panel.querySelectorAll(".availability-cell").forEach(button => {
+          button.addEventListener("click", () => {
+            const detail = ring.details?.[button.dataset.api]?.[Number(button.dataset.index)];
+            if (detail) openBugDialog(detail);
+          });
+        });
+      });
+    }
+
+    function renderLowlights() {
+      const container = document.getElementById("lowlights");
+      container.innerHTML = lowlights.map((item, index) => `
+        <article class="insight">
+          <span class="number">${index + 1}</span>
+          <div>
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.text)}</p>
+            <span class="tag">${escapeHtml(item.tag)}</span>
+            <button class="create-bug" type="button" data-lowlight="${index}">Create bug</button>
+          </div>
+        </article>`).join("");
+      container.querySelectorAll(".create-bug").forEach(button => {
+        button.addEventListener("click", () => openBugDialog(lowlights[Number(button.dataset.lowlight)]));
+      });
+    }
+
+    const bugDialog = document.getElementById("bug-dialog");
+    const bugForm = document.getElementById("bug-form");
+    const bugStatus = document.getElementById("bug-status");
+    const bugSubmit = document.getElementById("bug-submit");
+    let bugContext = null;
+
+    function openBugDialog(context) {
+      bugContext = context;
+      document.getElementById("bug-context").textContent =
+        `${context.ring} · ${context.scenario} · ${context.date} UTC+8 · ` +
+        `${context.availability.toFixed(2)}% · ${context.unsuccessful.toLocaleString()} ` +
+        `unsuccessful of ${context.total.toLocaleString()} samples · HTTP ${context.topStatus}`;
+      document.getElementById("bug-title").value =
+        `ESS - ${context.scenario} availability low in ${context.ring} on ${context.date}`;
+      document.getElementById("bug-notes").value =
+        `Please investigate the ${context.scenario} availability regression in ${context.ring}.\n\n` +
+        `Dominant unsuccessful status: HTTP ${context.topStatus} ` +
+        `(${(context.topStatusCount || 0).toLocaleString()} samples).\n\nPossible cause: `;
+      document.getElementById("bug-confirm").checked = false;
+      bugStatus.textContent = location.protocol === "file:"
+        ? "Bug creation requires the local report server. Run start_report_server.ps1."
+        : "";
+      bugStatus.className = "bug-status";
+      bugDialog.showModal();
+    }
+
+    function closeBugDialog() {
+      if (!bugSubmit.disabled) bugDialog.close();
+    }
+
+    document.getElementById("bug-dialog-close").addEventListener("click", closeBugDialog);
+    document.getElementById("bug-cancel").addEventListener("click", closeBugDialog);
+    bugDialog.addEventListener("cancel", event => {
+      if (bugSubmit.disabled) event.preventDefault();
+    });
+
+    bugForm.addEventListener("submit", async event => {
+      event.preventDefault();
+      if (!bugContext || !bugForm.reportValidity()) return;
+      if (location.protocol === "file:") {
+        bugStatus.textContent =
+          "Open this report through start_report_server.ps1 before creating a bug.";
+        return;
+      }
+
+      bugSubmit.disabled = true;
+      bugStatus.className = "bug-status";
+      bugStatus.textContent = "Creating Azure DevOps bug...";
+      const payload = {
+        ...bugContext,
+        title: document.getElementById("bug-title").value,
+        notes: document.getElementById("bug-notes").value,
+        severity: document.getElementById("bug-severity").value,
+        assignToMe: document.getElementById("bug-assign").checked,
+        confirmed: document.getElementById("bug-confirm").checked
+      };
+
+      try {
+        const response = await fetch("/api/bugs", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || `Request failed (${response.status})`);
+        bugStatus.className = "bug-status success";
+        bugStatus.innerHTML =
+          `Created bug ${escapeHtml(result.id)}. ` +
+          `<a href="${escapeHtml(result.url)}" target="_blank" rel="noopener">Open in Azure DevOps ↗</a>`;
+        document.getElementById("bug-confirm").checked = false;
+      } catch (error) {
+        bugStatus.textContent = error.message;
+      } finally {
+        bugSubmit.disabled = false;
+      }
+    });
+
+    function renderCauses() {
+      const body = document.getElementById("cause-table-body");
+      body.innerHTML = topCauses.map(item => `
+        <tr>
+          <td>${escapeHtml(item.label)}</td>
+          <td>${formatCount(item.count)}</td>
+          <td>${item.apis.map(escapeHtml).join(", ")}</td>
+        </tr>`).join("");
+    }
+
+    document.getElementById("data-notice").textContent =
+      `${reportMetadata.source} · Generated ${reportMetadata.generatedAt} · ${reportMetadata.rule}`;
+    renderSummary();
+    renderHeatmaps();
+    renderLowlights();
+    renderCauses();
+  </script>
+</body>
+</html>

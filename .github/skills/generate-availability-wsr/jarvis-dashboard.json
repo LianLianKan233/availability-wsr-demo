@@ -1,0 +1,2314 @@
+{
+  "account": "M365_ESS",
+  "content": {
+    "guid": "1a6bd0fb-6a53-4f6b-b210-9267f76b21dd",
+    "layout": {
+      "children": [
+        {
+          "element": "28a11079-32ac-41bc-a270-e8459bc62308",
+          "width": "50%"
+        },
+        {
+          "element": "832846be-c8a4-48be-b24d-6f7dfbf9ddc8",
+          "width": "50%"
+        },
+        {
+          "element": "255654b2-0e22-48b2-8249-a794b79420f0",
+          "width": "50%"
+        },
+        {
+          "element": "8ed4faf8-3591-4f79-a27c-13ed238ff4f8",
+          "width": "50%"
+        },
+        {
+          "element": "fb2adedd-11d9-430b-82e4-9883033c3ed1",
+          "width": "78%"
+        },
+        {
+          "element": "1e693642-d09d-41f3-a7d7-b2515c88ed2b",
+          "width": "78%"
+        },
+        {
+          "element": "5924c5b9-2451-4c83-a791-763d942db19b",
+          "width": "78%"
+        },
+        {
+          "element": "cba8b38d-3900-4789-b1bd-2fba66a47968",
+          "width": "78%"
+        }
+      ],
+      "layoutConfig": {
+        "seriesColorScheme": []
+      },
+      "managerClassName": "FlowLayoutManager"
+    },
+    "path": {
+      "name": "MDMSavedProfile",
+      "path": "./mdm"
+    },
+    "wires": {
+      "globalEndTime": -1,
+      "globalStartTime": -2592000000,
+      "literalDashboard": {
+        "description": "add 400, 408, 410 to successful response collection",
+        "seriesColorScheme": [],
+        "sharedWith": [],
+        "tags": [],
+        "templateSettings": []
+      },
+      "pendingWidgets": [],
+      "pinGlobalTimeRange": false,
+      "presentationMode": false,
+      "refreshTick": 1788100068451,
+      "widgets": [
+        {
+          "guid": "28a11079-32ac-41bc-a270-e8459bc62308",
+          "path": {
+            "name": "HeatMap",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "maxTimePoints": 161.625,
+              "mdm": [
+                {
+                  "aggregationMethod": "automatic",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "SDFV2"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "Any",
+                        "baseValue": 120,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Total",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Count",
+                      "useMetricsStore": false,
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "SDFV2"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "201,200,401,404,423,429,202,403,422,409,400,408,410,412"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "Any",
+                        "baseValue": 120,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Success",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Count",
+                      "useMetricsStore": false,
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#1FAEFF",
+                    "decimals": null,
+                    "name": "Layer 0",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": [
+                        {
+                          "above": "",
+                          "color": "",
+                          "label": "",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.Success*100)/layer.Total",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": "{SubScenarioName}"
+                }
+              ],
+              "minTimeWindow": 86400000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [],
+              "profile": "",
+              "title": "",
+              "widgets": [
+                "6002039a-c905-40d0-9a89-58f388a78479"
+              ]
+            },
+            "title": "ESS Availability by API (SDFV2) - R9",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "absolute",
+                "colorStops": [
+                  {
+                    "color": "#ff0000",
+                    "value": 0
+                  },
+                  {
+                    "color": "#c94332",
+                    "value": 98
+                  },
+                  {
+                    "color": "#f7c96c",
+                    "value": 98.999
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99.98
+                  },
+                  {
+                    "color": "#6aa200",
+                    "value": 99.99
+                  },
+                  {
+                    "color": "#658f00",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 2,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": true,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "",
+                    "label": "",
+                    "value": null
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [
+                "Time"
+              ],
+              "yAxisDimensions": [
+                "DeployRing",
+                "Scenario",
+                "Component",
+                "StatusCode"
+              ],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "width": 0.62,
+            "workflow": []
+          }
+        },
+        {
+          "guid": "832846be-c8a4-48be-b24d-6f7dfbf9ddc8",
+          "path": {
+            "name": "HeatMap",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "maxTimePoints": 161.625,
+              "mdm": [
+                {
+                  "aggregationMethod": "",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "MSIT"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "Sum",
+                        "baseValue": 100,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Total",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Count",
+                      "useMetricsStore": false,
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "MSIT"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "201,200,401,404,423,429,202,403,422,409,408,400,410,412"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Success",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Count",
+                      "useMetricsStore": false,
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#1FAEFF",
+                    "decimals": null,
+                    "name": "Layer 0",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": [
+                        {
+                          "above": "",
+                          "color": "",
+                          "label": "",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.Success*100)/layer.Total",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": "{SubScenarioName}"
+                }
+              ],
+              "minTimeWindow": 86400000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [],
+              "profile": "",
+              "title": "",
+              "widgets": [
+                "6002039a-c905-40d0-9a89-58f388a78479"
+              ]
+            },
+            "title": "ESS Availability by API (MSIT) - R9",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "absolute",
+                "colorStops": [
+                  {
+                    "color": "#ff0000",
+                    "value": 0
+                  },
+                  {
+                    "color": "#c94332",
+                    "value": 98
+                  },
+                  {
+                    "color": "#f7c96c",
+                    "value": 98.999
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99.98
+                  },
+                  {
+                    "color": "#6aa200",
+                    "value": 99.99
+                  },
+                  {
+                    "color": "#658f00",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 2,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": true,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "",
+                    "label": "",
+                    "value": null
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [
+                "Time"
+              ],
+              "yAxisDimensions": [
+                "DeployRing",
+                "Component",
+                "Scenario",
+                "StatusCode"
+              ],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "width": 0.62,
+            "workflow": []
+          }
+        },
+        {
+          "guid": "255654b2-0e22-48b2-8249-a794b79420f0",
+          "path": {
+            "name": "HeatMap",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "maxTimePoints": 161.625,
+              "mdm": [
+                {
+                  "aggregationMethod": "",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "SIP"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 10,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Total",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Count",
+                      "useMetricsStore": false,
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "SIP"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "201,200,401,404,423,429,202,403,422,400,408,410,412,204"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Success",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Count",
+                      "useMetricsStore": false,
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#1FAEFF",
+                    "decimals": null,
+                    "name": "Layer 0",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": [
+                        {
+                          "above": "",
+                          "color": "",
+                          "label": "",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.Success*100)/layer.Total",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": "{SubScenarioName}"
+                }
+              ],
+              "minTimeWindow": 86400000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [],
+              "profile": "",
+              "title": "",
+              "widgets": [
+                "6002039a-c905-40d0-9a89-58f388a78479"
+              ]
+            },
+            "title": "ESS Availability by API (SIP) - R9",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "absolute",
+                "colorStops": [
+                  {
+                    "color": "#ff0000",
+                    "value": 0
+                  },
+                  {
+                    "color": "#c94332",
+                    "value": 98
+                  },
+                  {
+                    "color": "#f7c96c",
+                    "value": 98.999
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99.98
+                  },
+                  {
+                    "color": "#6aa200",
+                    "value": 99.99
+                  },
+                  {
+                    "color": "#658f00",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 2,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": true,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "",
+                    "label": "",
+                    "value": null
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [
+                "Time"
+              ],
+              "yAxisDimensions": [
+                "Component",
+                "DeployRing",
+                "Scenario",
+                "ClientAppId",
+                "StatusCode"
+              ],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "width": 0.62,
+            "workflow": []
+          }
+        },
+        {
+          "guid": "8ed4faf8-3591-4f79-a27c-13ed238ff4f8",
+          "path": {
+            "name": "HeatMap",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "maxTimePoints": 161.625,
+              "mdm": [
+                {
+                  "aggregationMethod": "automatic",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "WW"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "Any",
+                        "baseValue": 10,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Total",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Sum",
+                      "useMetricsStore": false,
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Scenario",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "DeployRing",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": "WW"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Component",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "201,200,401,404,423,429,202,403,422,409,408,410,400,412,204"
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "Success",
+                      "namespace": "ESSAvailabilityR9",
+                      "nullDataBehavior": "",
+                      "preAggregation": "$MSTORE_PREAGGREGATE",
+                      "samplingType": "Sum",
+                      "useMetricsStore": false,
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#1FAEFF",
+                    "decimals": null,
+                    "name": "Layer 0",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": [
+                        {
+                          "above": "",
+                          "color": "",
+                          "label": "",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.Success*100)/layer.Total",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": "{SubScenarioName}"
+                }
+              ],
+              "minTimeWindow": 86400000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [],
+              "profile": "",
+              "title": "",
+              "widgets": [
+                "6002039a-c905-40d0-9a89-58f388a78479"
+              ]
+            },
+            "title": "ESS Availability by API (WW) - R9",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "absolute",
+                "colorStops": [
+                  {
+                    "color": "#ff0000",
+                    "value": 0
+                  },
+                  {
+                    "color": "#c94332",
+                    "value": 98
+                  },
+                  {
+                    "color": "#f7c96c",
+                    "value": 98.999
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99
+                  },
+                  {
+                    "color": "#f2da53",
+                    "value": 99.98
+                  },
+                  {
+                    "color": "#6aa200",
+                    "value": 99.99
+                  },
+                  {
+                    "color": "#658f00",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 2,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": true,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "",
+                    "label": "",
+                    "value": null
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [
+                "Time"
+              ],
+              "yAxisDimensions": [
+                "Component",
+                "DeployRing",
+                "Scenario",
+                "ClientAppId",
+                "StatusCode"
+              ],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "width": 0.61,
+            "workflow": []
+          }
+        },
+        {
+          "guid": "fb2adedd-11d9-430b-82e4-9883033c3ed1",
+          "path": {
+            "name": "Sparklines",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "mdm": [
+                {
+                  "aggregationMethod": "automatic",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "SDFV2"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s0",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "SDFV2"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "200,201,202,400,401,404,409,422,423,429"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s1",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#095fb0",
+                    "decimals": null,
+                    "name": "",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": []
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.s1 * 100)/layer.s0",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": ""
+                }
+              ],
+              "minTimeWindow": 60000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000,
+              "timeOffset": 0
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [
+                "User/jiayingjiang",
+                "test"
+              ],
+              "profile": "",
+              "title": "",
+              "widgets": []
+            },
+            "title": "Availability in SDFV2",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "percentile",
+                "colorStops": [
+                  {
+                    "color": "#FFAA00",
+                    "value": 0
+                  },
+                  {
+                    "color": "#C94332",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 5,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": false,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "#6aa200",
+                    "label": "",
+                    "value": 100
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": null,
+                    "value": 99.99
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": "",
+                    "value": 99.98
+                  },
+                  {
+                    "above": "",
+                    "color": "#f7c96c",
+                    "label": null,
+                    "value": 99
+                  },
+                  {
+                    "above": "",
+                    "color": "#C94332",
+                    "label": null,
+                    "value": 98.999
+                  },
+                  {
+                    "above": "",
+                    "color": "#ff0000",
+                    "label": null,
+                    "value": 98
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [],
+              "yAxisDimensions": [],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "workflow": []
+          }
+        },
+        {
+          "guid": "1e693642-d09d-41f3-a7d7-b2515c88ed2b",
+          "path": {
+            "name": "Sparklines",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "mdm": [
+                {
+                  "aggregationMethod": "automatic",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "MSIT"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s0",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "MSIT"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "200,201,202,400,401,404,409,422,423,429"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s1",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#095fb0",
+                    "decimals": null,
+                    "name": "",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": []
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.s1 * 100)/layer.s0",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": ""
+                }
+              ],
+              "minTimeWindow": 60000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000,
+              "timeOffset": 0
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [
+                "User/jiayingjiang",
+                "test"
+              ],
+              "profile": "",
+              "title": "",
+              "widgets": []
+            },
+            "title": "Availability in MSIT",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "percentile",
+                "colorStops": [
+                  {
+                    "color": "#FFAA00",
+                    "value": 0
+                  },
+                  {
+                    "color": "#C94332",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 5,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": false,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "#6aa200",
+                    "label": "",
+                    "value": 100
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": null,
+                    "value": 99.99
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": "",
+                    "value": 99.98
+                  },
+                  {
+                    "above": "",
+                    "color": "#f7c96c",
+                    "label": null,
+                    "value": 99
+                  },
+                  {
+                    "above": "",
+                    "color": "#C94332",
+                    "label": null,
+                    "value": 98.999
+                  },
+                  {
+                    "above": "",
+                    "color": "#ff0000",
+                    "label": null,
+                    "value": 98
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [],
+              "yAxisDimensions": [],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "workflow": []
+          }
+        },
+        {
+          "guid": "5924c5b9-2451-4c83-a791-763d942db19b",
+          "path": {
+            "name": "Sparklines",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "mdm": [
+                {
+                  "aggregationMethod": "automatic",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s0",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "200,201,202,400,401,404,409,422,423,429"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s1",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#095fb0",
+                    "decimals": null,
+                    "name": "",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": []
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.s1 * 100)/layer.s0",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": ""
+                }
+              ],
+              "minTimeWindow": 60000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000,
+              "timeOffset": 0
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [
+                "User/jiayingjiang",
+                "test"
+              ],
+              "profile": "",
+              "title": "",
+              "widgets": []
+            },
+            "title": "Availability in SIP",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "percentile",
+                "colorStops": [
+                  {
+                    "color": "#FFAA00",
+                    "value": 0
+                  },
+                  {
+                    "color": "#C94332",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 5,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": false,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "#6aa200",
+                    "label": "",
+                    "value": 100
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": null,
+                    "value": 99.99
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": "",
+                    "value": 99.98
+                  },
+                  {
+                    "above": "",
+                    "color": "#f7c96c",
+                    "label": null,
+                    "value": 99
+                  },
+                  {
+                    "above": "",
+                    "color": "#C94332",
+                    "label": null,
+                    "value": 98.999
+                  },
+                  {
+                    "above": "",
+                    "color": "#ff0000",
+                    "label": null,
+                    "value": 98
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [],
+              "yAxisDimensions": [],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "workflow": []
+          }
+        },
+        {
+          "guid": "cba8b38d-3900-4789-b1bd-2fba66a47968",
+          "path": {
+            "name": "Sparklines",
+            "path": "./xts"
+          },
+          "wires": {
+            "__ignoreOverrides": false,
+            "data": {
+              "compareTimeframe": "",
+              "cutoffTime": false,
+              "endTime": -1,
+              "mdm": [
+                {
+                  "aggregationMethod": "automatic",
+                  "dataSources": [
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s0",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    },
+                    {
+                      "account": "M365_ESS",
+                      "conditions": [
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Action",
+                          "isOutput": true,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ClientAppId",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "Environment",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "ProcessorName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "EssAdminApi"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StatusCode",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": "200,201,202,400,401,404,409,422,423,429"
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "StorageGroup",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        },
+                        {
+                          "exclusions": [],
+                          "free": false,
+                          "id": "SubScenarioName",
+                          "isOutput": false,
+                          "regex": "*",
+                          "value": ""
+                        }
+                      ],
+                      "filter": {
+                        "aggregator": "",
+                        "baseValue": 0,
+                        "filter": "GreaterThan"
+                      },
+                      "limit": {
+                        "metric": null,
+                        "order": "Descending",
+                        "top": null
+                      },
+                      "metric": "RequestAvailability",
+                      "name": "s1",
+                      "namespace": "ESSAvailability",
+                      "nullDataBehavior": "zero",
+                      "samplingType": "Count",
+                      "vips": null
+                    }
+                  ],
+                  "displayOptions": {
+                    "axisSide": "left",
+                    "color": "#095fb0",
+                    "decimals": null,
+                    "name": "",
+                    "seriesStyle": "Solid",
+                    "seriesType": "",
+                    "threshold": {
+                      "thresholds": []
+                    },
+                    "units": ""
+                  },
+                  "expression": "(layer.s1 * 100)/layer.s0",
+                  "index": 0,
+                  "layerType": "",
+                  "queryExemplars": false,
+                  "resolution": 1,
+                  "seriesNaming": ""
+                }
+              ],
+              "minTimeWindow": 60000,
+              "refreshTick": 1788100070068,
+              "startTime": -2592000000,
+              "timeOffset": 0
+            },
+            "description": "",
+            "drilldown": {
+              "account": "",
+              "dimensions": [
+                ""
+              ],
+              "drilldownType": 0,
+              "link": "",
+              "namespace": "",
+              "path": [
+                "User/jiayingjiang",
+                "test"
+              ],
+              "profile": "",
+              "title": "",
+              "widgets": []
+            },
+            "title": "Availability in WW",
+            "view": {
+              "biggerIsBetter": null,
+              "chartType": "line",
+              "colorMapping": {
+                "colorStopType": "percentile",
+                "colorStops": [
+                  {
+                    "color": "#FFAA00",
+                    "value": 0
+                  },
+                  {
+                    "color": "#C94332",
+                    "value": 100
+                  }
+                ],
+                "defaultColor": "#FFFFFF"
+              },
+              "compareInline": false,
+              "comparisonType": "both",
+              "decimals": 5,
+              "gridSorting": {},
+              "groupTooltip": true,
+              "hiddenColumns": [],
+              "mergeLayers": false,
+              "onSelectColumnName": "",
+              "rotateColumns": false,
+              "separateYAxes": false,
+              "showLegend": true,
+              "showSource": false,
+              "showSparklinesSummary": true,
+              "showTooltip": true,
+              "showValues": false,
+              "sortType": "nameAsc",
+              "splitDimensionColumns": false,
+              "stacking": "",
+              "summarize": false,
+              "textSize": 0.5,
+              "threshold": {
+                "thresholds": [
+                  {
+                    "above": "",
+                    "color": "#6aa200",
+                    "label": "",
+                    "value": 100
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": null,
+                    "value": 99.99
+                  },
+                  {
+                    "above": "",
+                    "color": "#f2da53",
+                    "label": "",
+                    "value": 99.98
+                  },
+                  {
+                    "above": "",
+                    "color": "#f7c96c",
+                    "label": null,
+                    "value": 99
+                  },
+                  {
+                    "above": "",
+                    "color": "#C94332",
+                    "label": null,
+                    "value": 98.999
+                  },
+                  {
+                    "above": "",
+                    "color": "#ff0000",
+                    "label": null,
+                    "value": 98
+                  }
+                ]
+              },
+              "tooltipSum": true,
+              "xAxisDimensions": [],
+              "yAxisDimensions": [],
+              "yAxisMax": null,
+              "yAxisMin": null,
+              "yAxisType": "linear"
+            },
+            "workflow": []
+          }
+        }
+      ]
+    }
+  },
+  "description": "add 400, 408, 410 to successful response collection",
+  "path": "Availability/WSR%20Availability/ESSAdminApiAvailability",
+  "sharedWith": [],
+  "tags": [],
+  "templateSettings": []
+}
